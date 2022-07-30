@@ -1,61 +1,57 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import s from './Serchbar.module.css';
+import { useState } from 'react';
 
-export class Serchbar extends Component {
-  state = {
-    input: '',
-  };
+export const Serchbar = ({ onSubmit, onChangePerPage }) => {
+  const [input, setInput] = useState('');
 
-  handleApdateInpuy = e => {
-    this.setState({ input: e.target.value });
+  const handleApdateInpuy = e => {
+    setInput(e.target.value);
   };
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.input.trim() !== '') {
-      this.props.onSubmit(this.state.input);
-      this.handleReset();
+    if (input.trim() !== '') {
+      onSubmit(input);
+      handleReset();
     }
   };
-  handleReset = () => {
-    this.setState({ input: '' });
+  const handleReset = () => {
+    setInput('');
   };
-  handlePerPage = e => {
-    this.props.onChangePerPage(e.target.value);
+  const handlePerPage = e => {
+    onChangePerPage(e.target.value);
   };
 
-  render() {
-    return (
-      <header className={s.searchbar}>
-        <label className={s.show}>
-          Show pictures:
-          <select name="perPage" onChange={this.handlePerPage}>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-            <option value={20}>20</option>
-          </select>
-        </label>
-        <form className={s.form} onSubmit={this.handleSubmit}>
-          <button type="submit" className={s.button}>
-            <span className={s.buttonLabel}>Search</span>
-          </button>
+  return (
+    <header className={s.searchbar}>
+      <label className={s.show}>
+        Show pictures:
+        <select name="perPage" onChange={handlePerPage}>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
+        </select>
+      </label>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <button type="submit" className={s.button}>
+          <span className={s.buttonLabel}>Search</span>
+        </button>
 
-          <input
-            className={s.input}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={this.state.input}
-            onChange={this.handleApdateInpuy}
-          />
-        </form>
-      </header>
-    );
-  }
-}
+        <input
+          className={s.input}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={input}
+          onChange={handleApdateInpuy}
+        />
+      </form>
+    </header>
+  );
+};
 
 Serchbar.propTypes = {
   onSubmit: PropTypes.func,
