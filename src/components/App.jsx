@@ -23,7 +23,7 @@ export const App = () => {
       setShowLoad(true);
       fetchImage(searchImg, page, perPage)
         .then(res => {
-          setImageList([...imageList, ...res.hits]);
+          setImageList(prev => [...prev, ...res.hits]);
           setTotalImg(res.totalHits);
           setStatus(res.hits.length ? 'resolved' : 'rejected');
         })
